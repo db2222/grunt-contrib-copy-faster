@@ -1,5 +1,5 @@
 /*
- * grunt-contrib-copy
+ * grunt-contrib-copy-faster
  * http://gruntjs.com/
  *
  * Copyright (c) 2016 Chris Talkington, contributors
@@ -32,7 +32,7 @@ module.exports = function(grunt) {
     },
 
     testVars: {
-      name: 'grunt-contrib-copy',
+      name: 'grunt-contrib-copy-faster',
       version: '0.1.0',
       match: 'folder_one/*'
     },

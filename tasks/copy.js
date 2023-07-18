@@ -1,5 +1,5 @@
 /*
- * grunt-contrib-copy
+ * grunt-contrib-copy-faster
  * http://gruntjs.com/
  *
  * Copyright (c) 2016 Chris Talkington, contributors
