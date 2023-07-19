@@ -1,3 +1,11 @@
+v1.1.1:
+  date: 2023-07-19
+  changes:
+    - Corrections/improvements in regards to using fs.copyFileSync. This is now the default.
+v1.1.0:
+  date: 2023-07-18
+  changes:
+    - Use fs.copyFileSync if possible to highly improve copy speed.
 v1.0.0:
   date: 2016-03-04
   changes:

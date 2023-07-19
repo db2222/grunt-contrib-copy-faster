@@ -1,6 +1,6 @@
-This is a fork of https://github.com/gruntjs/grunt-contrib-copy.<br>
-The only change is that the pull request https://github.com/gruntjs/grunt-contrib-copy/pull/306 is applied (thank you to @greggman).<br>
-This was necessary as the project seemingly is dead.
+This is a fork of https://github.com/gruntjs/grunt-contrib-copy. This was necessary as the project seemingly is dead.<br>
+The only change is that the idea of the pull request https://github.com/gruntjs/grunt-contrib-copy/pull/306 is applied (thank you to @greggman) but modified.<br>
+Here fs.copyFileSync is the default instead of the Grunt variant as this is much faster.
 
 # grunt-contrib-copy-faster v1.1.0
 
@@ -31,6 +31,14 @@ _Run this task with the `grunt copy` command._
 
 Task targets, files and options may be specified according to the grunt [Configuring tasks](http://gruntjs.com/configuring-tasks) guide.
 ### Options
+
+#### useFsCopy
+Type: `Boolean`
+Default: `true`
+
+This determines if fs.copyFileSync should be used instead of the Grunt copy variant. It **highly** reduces the execution time for copying files.<br>
+Beware that if active the options in regards to `encoding` and the multiple ones for `process` then take no effect.
+If they are needed you have to deactivate `useFsCopy`.
 
 #### process
 Type: `Function(content, srcpath)`
@@ -257,6 +265,8 @@ Aborted due to warnings.
 
 ## Release History
 
+ * 2023-07-19   v1.1.1   Corrections/improvements in regards to using fs.copyFileSync. This is now the default.
+ * 2023-07-18   v1.1.0   Use fs.copyFileSync if possible to highly improve copy speed.
  * 2016-03-04   v1.0.0   Bump devDependencies. Add example of using relative path. Point main to task and remove peerDeps.
  * 2015-10-19   v0.8.2   Fix expand-less copies with multiple files.
  * 2015-08-20   v0.8.1   Update `chalk` dependency.
@@ -279,5 +289,3 @@ Aborted due to warnings.
 ---
 
 Task submitted by [Chris Talkington](http://christalkington.com/)
-
-*This file was generated on Thu Apr 07 2016 15:11:09.*

@@ -24,7 +24,8 @@ module.exports = function(grunt) {
       processContent: false,
       processContentExclude: [],
       timestamp: false,
-      mode: false
+      mode: false,
+      useFsCopy: true
     });
 
     var copyOptions = {
@@ -63,6 +64,15 @@ module.exports = function(grunt) {
       fs.futimesSync(fd, stat.atime, stat.mtime);
       fs.closeSync(fd);
     };
+    
+    var createDirIfNotExists = function (filePath) {
+      var dirname = path.dirname(filePath);
+      if (fs.existsSync(dirname)) {
+        return true;
+      }
+      createDirIfNotExists(dirname);
+      fs.mkdirSync(dirname);
+    }
 
     var isExpandedPair;
     var dirs = {};
@@ -96,17 +106,20 @@ module.exports = function(grunt) {
           tally.dirs++;
         } else {
           grunt.verbose.writeln('Copying ' + chalk.cyan(src) + ' -> ' + chalk.cyan(dest));
-          // use 8x faster copy if possible.
-          if (fs.copyFileSync && options.mode !== false && options.timestamp !== false && !options.process) {
+
+          //This is *much* faster than the Grunt variant.
+          if (fs.copyFileSync && options.useFsCopy) {
+            createDirIfNotExists(dest);
             fs.copyFileSync(src, dest);
           } else {
             grunt.file.copy(src, dest, copyOptions);
-            if (options.timestamp !== false) {
-              syncTimestamp(src, dest);
-            }
-            if (options.mode !== false) {
-              fs.chmodSync(dest, (options.mode === true) ? fs.lstatSync(src).mode : options.mode);
-            }
+          }
+
+          if (options.timestamp !== false) {
+            syncTimestamp(src, dest);
+          }
+          if (options.mode !== false) {
+            fs.chmodSync(dest, (options.mode === true) ? fs.lstatSync(src).mode : options.mode);
           }
           tally.files++;
         }
